@@ -148,9 +148,9 @@
 <body>
 
     <header class="header">
-        <img src="https://i.postimg.cc/FHFhGD6k/Whats-App-Image-2026-09-03-at-21-17-15.jpg" alt="شعار مسابقة موجة البحر للسوروبان" class="logo">
-        <h1 id="mainCompTitle">مسابقة موجة البحر للسوروبان وألعاب الذكاء</h1>
-        <p><i class="fa-solid fa-trophy"></i> منصة التسجيل وتحديث البيانات لمسابقة 19/09/2026</p>
+        <img src="https://i.postimg.cc/Pqf42T6P/Whats-App-Image-2026-09-01-at-17-40-41.jpg" alt="شعار مسابقة باب الصحراء للسوروبان" class="logo">
+        <h1 id="mainCompTitle">مسابقة باب الصحراء للسوروبان وألعاب الذكاء</h1>
+        <p><i class="fa-solid fa-trophy"></i> منصة التسجيل وتحديث البيانات لمسابقة 30/10/2026</p>
     </header>
 
     <div class="container">
@@ -170,11 +170,11 @@
                             <div class="radio-group">
                                 <label class="option-item">
                                     <input type="radio" name="attendanceType" value="حضوري" checked>
-                                    <span>المسابقة حضورياً <span class="price-badge">(2500 دج)</span></span>
+                                    <span>المسابقة حضورياً <span class="price-badge">(2000 دج)</span></span>
                                 </label>
                                 <label class="option-item">
                                     <input type="radio" name="attendanceType" value="أون لاين">
-                                    <span>المسابقة أون لاين <span class="price-badge">(العرب 15 دولار / الجزائريين 1500 دج)</span></span>
+                                    <span>المسابقة أون لاين </span>
                                 </label>
                             </div>
                         </div>
@@ -204,7 +204,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label>إسم المرافق <span class="optional-tag">(اختياري - 500 دج)</span></label>
+                        <label>اسم المرافق <span class="optional-tag">اختياري</span></label>
                         <input type="text" id="chaperone" placeholder="اسم المرافق إن وجد...">
                     </div>
 
@@ -377,7 +377,7 @@
 
     <script>
         // ضع هنا رابط Web App الخاص بك بعد النشر
-        const SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyI9s9ngRvWrw5Sjb2__2RrbtyCoW4eSaOW7mI7mwyWV1G9S9ll0ETvbMdp7BoQgAqWRw/exec";
+        const SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzEUKwfaqK_4mbiXxtwT542k99OAMEL2szjyXWTkCY6l7QIC3KUVsB6osZO-BCPu6-MjQ/exec";
 
         let centerTimeout = null;
         let studentTimeout = null;
@@ -693,7 +693,7 @@
 
             const payload = {
                 compTitle: document.getElementById('mainCompTitle').innerText,
-                compDate: "19/09/2026",
+                compDate: "30/10/2026",
                 attendanceType: selectedAttendance ? selectedAttendance.value : "حضوري",
                 club: document.getElementById('club').value.trim(),
                 coach: activeCoach,
