@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التسجيل في الملتقى الإلكتروني</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #059669;
+            --primary-dark: #047857;
+            --border: #cbd5e1;
+            --success: #059669;
+            --danger: #dc2626;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+        body { background-color: #f0fdf4; color: #334155; padding-bottom: 50px; }
+
+        .header {
+            background: linear-gradient(135deg, #059669 0%, #064e3b 100%);
+            color: white; padding: 25px 15px; text-align: center;
+        }
+        .header h1 { font-size: 1.6rem; font-weight: 800; margin-bottom: 5px; }
+        .header p { font-size: 0.95rem; color: #a7f3d0; }
+
+        .container { max-width: 800px; margin: -20px auto 0; padding: 0 15px; }
+        .card {
+            background: white; border-radius: 16px; padding: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;
+        }
+
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        
+        label { font-size: 0.88rem; font-weight: 700; color: #475569; }
+        .optional-tag { font-size: 0.78rem; font-weight: normal; color: #64748b; }
+
+        input[type="text"], input[type="tel"], input[type="email"], select, textarea {
+            padding: 11px 13px; border-radius: 8px; border: 1.5px solid var(--border);
+            font-size: 0.95rem; outline: none; background: #f8fafc; width: 100%;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); background: #fff; }
+        
+        .btn {
+            width: 100%; margin-top: 25px; padding: 14px; background: var(--primary);
+            color: white; border: none; border-radius: 10px; font-size: 1.05rem; font-weight: 700;
+            cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px;
+            transition: 0.2s;
+        }
+        .btn:hover { background: var(--primary-dark); }
+        .btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        .success-box {
+            display: none; text-align: center; padding: 15px; background: #f0fdf4;
+            border: 1px solid #86efac; border-radius: 8px; margin-top: 15px; color: #166534; font-weight: 700;
+        }
+        .error-box {
+            display: none; text-align: center; padding: 15px; background: #fef2f2;
+            border: 1px solid #fca5a5; border-radius: 8px; margin-top: 15px; color: #991b1b; font-weight: 700;
+        }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #059669; text-decoration: none; font-weight: 700; font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .back-link:hover { text-decoration: underline; }
+
+        .footer-credit {
+            margin-top: 25px; text-align: center; font-size: 0.9rem; color: #64748b;
+            font-weight: 700; padding-top: 15px; border-top: 1px dashed #cbd5e1;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1 id="mainCompTitle">الملتقى الإلكتروني</h1>
+        <p><i class="fa-solid fa-laptop-code"></i> منصة التسجيل في الملتقى الإلكتروني</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-right"></i> العودة إلى صفحة المسابقة</a>
+            
+            <form id="forumForm" onsubmit="submitForumData(event)">
+                <div class="form-grid">
+                    
+                    <div class="form-group full-width">
+                        <label>الاسم واللقب *</label>
+                        <input type="text" id="fullName" placeholder="اكتب اسمك ولقبك الكامل..." required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>البلد *</label>
+                        <select id="country" required onchange="toggleWilaya()">
+                            <option value="الجزائر" selected>الجزائر</option>
+                            <option value="تونس">تونس</option>
+                            <option value="المغرب">المغرب</option>
+                            <option value="ليبيا">ليبيا</option>
+                            <option value="موريتانيا">موريتانيا</option>
+                            <option value="دولة أخرى">دولة أخرى</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="wilayaContainer">
+                        <label>الولاية *</label>
+                        <select id="wilaya" required>
+                            <option value="">-- اختر الولاية --</option>
+                            <option value="01 - أدرار">01 - أدرار</option>
+                            <option value="02 - الشلف">02 - الشلف</option>
+                            <option value="03 - الأغواط">03 - الأغواط</option>
+                            <option value="04 - أم البواقي">04 - أم البواقي</option>
+                            <option value="05 - باتنة">05 - باتنة</option>
+                            <option value="06 - بجاية">06 - بجاية</option>
+                            <option value="07 - بسكرة">07 - بسكرة</option>
+                            <option value="08 - بشار">08 - بشار</option>
+                            <option value="09 - البليدة">09 - البليدة</option>
+                            <option value="10 - البويرة">10 - البويرة</option>
+                            <option value="11 - تمنراست">11 - تمنراست</option>
+                            <option value="12 - تبسة">12 - تبسة</option>
+                            <option value="13 - تلمسان">13 - تلمسان</option>
+                            <option value="14 - تيارت">14 - تيارت</option>
+                            <option value="15 - تيزي وزو">15 - تيزي وزو</option>
+                            <option value="16 - الجزائر">16 - الجزائر</option>
+                            <option value="17 - الجلفة">17 - الجلفة</option>
+                            <option value="18 - جيجل">18 - جيجل</option>
+                            <option value="19 - سطيف">19 - سطيف</option>
+                            <option value="20 - سعيدة">20 - سعيدة</option>
+                            <option value="21 - سكيكدة">21 - سكيكدة</option>
+                            <option value="22 - سيدي بلعباس">22 - سيدي بلعباس</option>
+                            <option value="23 - عنابة">23 - عنابة</option>
+                            <option value="24 - قالمة">24 - قالمة</option>
+                            <option value="25 - قسنطينة">25 - قسنطينة</option>
+                            <option value="26 - المدية">26 - المدية</option>
+                            <option value="27 - مستغانم">27 - مستغانم</option>
+                            <option value="28 - المسيلة">28 - المسيلة</option>
+                            <option value="29 - معسكر">29 - معسكر</option>
+                            <option value="30 - ورقلة">30 - ورقلة</option>
+                            <option value="31 - وهران">31 - وهران</option>
+                            <option value="32 - البيض">32 - البيض</option>
+                            <option value="33 - إليزي">33 - إليزي</option>
+                            <option value="34 - برج بوعريريج">34 - برج بوعريريج</option>
+                            <option value="35 - بومرداس">35 - بومرداس</option>
+                            <option value="36 - الطارف">36 - الطارف</option>
+                            <option value="37 - تندوف">37 - تندوف</option>
+                            <option value="38 - تسمسيلت">38 - تسمسيلت</option>
+                            <option value="39 - الوادي">39 - الوادي</option>
+                            <option value="40 - خنشلة">40 - خنشلة</option>
+                            <option value="41 - سوق أهراس">41 - سوق أهراس</option>
+                            <option value="42 - تيبازة">42 - تيبازة</option>
+                            <option value="43 - ميلة">43 - ميلة</option>
+                            <option value="44 - عين الدفلى">44 - عين الدفلى</option>
+                            <option value="45 - النعامة">45 - النعامة</option>
+                            <option value="46 - عين تموشنت">46 - عين تموشنت</option>
+                            <option value="47 - غرداية">47 - غرداية</option>
+                            <option value="48 - غليزان">48 - غليزان</option>
+                            <option value="49 - تيميمون">49 - تيميمون</option>
+                            <option value="50 - برج باجي مختار">50 - برج باجي مختار</option>
+                            <option value="51 - أولاد جلال">51 - أولاد جلال</option>
+                            <option value="52 - بني عباس">52 - بني عباس</option>
+                            <option value="53 - عين صالح">53 - عين صالح</option>
+                            <option value="54 - عين قزام">54 - عين قزام</option>
+                            <option value="55 - تقرت">55 - تقرت</option>
+                            <option value="56 - جانت">56 - جانت</option>
+                            <option value="57 - المغير">57 - المغير</option>
+                            <option value="58 - المنيعة">58 - المنيعة</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>البريد الإلكتروني *</label>
+                        <input type="email" id="email" placeholder="example@gmail.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>رقم الهاتف *</label>
+                        <input type="tel" id="phone" placeholder="0555667788" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>الصفة *</label>
+                        <select id="role" required>
+                            <option value="">-- اختر الصفة --</option>
+                            <option value="مشارك | Attendee">مشارك | Attendee</option>
+                            <option value="متحدث | Speaker">متحدث | Speaker</option>
+                            <option value="رئيس جلسة | Session Moderator">رئيس جلسة | Session Moderator</option>
+                            <option value="مقدم ورشة عمل | Workshop Facilitator">مقدم ورشة عمل | Workshop Facilitator</option>
+                            <option value="ضيف شرف | VIP">ضيف شرف | VIP</option>
+                            <option value="راعي | Sponsor">راعي | Sponsor</option>
+                            <option value="عارض | Exhibitor">عارض | Exhibitor</option>
+                            <option value="أكاديمي / باحث | Academic / Researcher">أكاديمي / باحث | Academic / Researcher</option>
+                            <option value="طالب | Student">طالب | Student</option>
+                            <option value="منظم | Organizer">منظم | Organizer</option>
+                            <option value="متطوع | Volunteer">متطوع | Volunteer</option>
+                            <option value="إعلامي / صحفي | Media / Press">إعلامي / صحفي | Media / Press</option>
+                            <option value="مهتم بالمجال | Interested in the field">مهتم بالمجال | Interested in the field</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width" id="topicContainer" style="display: none;">
+                        <label>عنوان المداخلة <span class="optional-tag">(اختياري)</span></label>
+                        <input type="text" id="topic" placeholder="عنوان مداخلتك أو ورشتك...">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>ملاحظاتكم <span class="optional-tag">(اختياري)</span></label>
+                        <textarea id="notes" rows="2" placeholder="أي ملاحظة أو اقتراح إضافي..."></textarea>
+                    </div>
+
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn">
+                    <i class="fa-solid fa-paper-plane"></i> تسجيل المشارك وحفظ البيانات
+                </button>
+            </form>
+
+            <div id="successMsg" class="success-box"></div>
+            <div id="errorMsg" class="error-box"></div>
+
+            <div class="footer-credit">
+                <span>لجنة تنظيم الملتقى الإلكتروني &copy; 2026</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ضع هنا نفس رابط Web App الخاص بك
+        const SCRIPT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzNyC-Y8Jgs6p-ZOCqI15vvAdNXconvOuNyyqtsRFE7vRlg6bJ46JMTCEZswOp8z1jr8A/exec";
+
+        // إظهار/إخفاء حقل الولاية حسب البلد
+        function toggleWilaya() {
+            const country = document.getElementById('country').value;
+            const wilayaContainer = document.getElementById('wilayaContainer');
+            const wilayaSelect = document.getElementById('wilaya');
+            
+            if (country === 'الجزائر') {
+                wilayaContainer.style.display = 'block';
+                wilayaSelect.required = true;
+            } else {
+                wilayaContainer.style.display = 'none';
+                wilayaSelect.required = false;
+                wilayaSelect.value = ''; // مسح القيمة
+            }
+        }
+
+        // إظهار حقل عنوان المداخلة للصفات المحددة
+        document.getElementById('role').addEventListener('change', function() {
+            const topicContainer = document.getElementById('topicContainer');
+            const role = this.value;
+            const rolesWithTopic = [
+                "متحدث | Speaker", 
+                "رئيس جلسة | Session Moderator", 
+                "مقدم ورشة عمل | Workshop Facilitator", 
+                "أكاديمي / باحث | Academic / Researcher"
+            ];
+            
+            if (rolesWithTopic.includes(role)) {
+                topicContainer.style.display = 'block';
+            } else {
+                topicContainer.style.display = 'none';
+                document.getElementById('topic').value = '';
+            }
+        });
+
+        function submitForumData(e) {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const succBox = document.getElementById('successMsg');
+            const errBox = document.getElementById('errorMsg');
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...';
+            succBox.style.display = 'none';
+            errBox.style.display = 'none';
+
+            // جمع البيانات
+            const payload = {
+                formType: "forum", // هذا الحقل مهم جداً لكي يوجه السكربت البيانات للورقة الصحيحة
+                fullName: document.getElementById('fullName').value.trim(),
+                country: document.getElementById('country').value,
+                wilaya: document.getElementById('country').value === 'الجزائر' ? document.getElementById('wilaya').value : '',
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                role: document.getElementById('role').value,
+                topic: document.getElementById('topic').value.trim(),
+                notes: document.getElementById('notes').value.trim()
+            };
+
+            // إرسال البيانات
+            fetch(SCRIPT_WEB_APP_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(payload)
+            })
+            .then(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> تسجيل المشارك وحفظ البيانات';
+                
+                // إعادة تعيين الحقول
+                document.getElementById('fullName').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('role').value = '';
+                document.getElementById('topic').value = '';
+                document.getElementById('notes').value = '';
+                document.getElementById('topicContainer').style.display = 'none';
+
+                succBox.innerHTML = '✅ تم تسجيل بياناتك في الملتقى الإلكتروني بنجاح!<br>📧 سيتم إرسال بريد تأكيدي قريباً.';
+                succBox.style.display = 'block';
+                
+                setTimeout(() => { succBox.style.display = 'none'; }, 6000);
+            })
+            .catch(err => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> إعادة المحاولة';
+                errBox.innerText = '❌ حدث خطأ أثناء الإرسال: ' + err.message;
+                errBox.style.display = 'block';
+            });
+        }
+    </script>
+</body>
+</html>
